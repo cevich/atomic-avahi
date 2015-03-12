@@ -1,4 +1,5 @@
-FROM registry.access.redhat.com/rhel7
+#FROM registry.access.redhat.com/rhel7
+FROM stackbrew/centos:7
 MAINTAINER cevich@redhat.com
 RUN yum install -y deltarpm yum-utils &&\
     yum update -y && \
