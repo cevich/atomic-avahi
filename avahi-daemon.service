@@ -8,10 +8,9 @@ Restart=always
 RestartSec=60
 TimeoutSec=2
 Environment="HOME=/run/avahi-daemon"
-WorkingDirectory=/run/avahi-daemon
 ExecStartPre=/usr/bin/mkdir -p /run/avahi-daemon
-ExecStart=/usr/bin/atomic run --name=avahi-daemon avahi-daemon
-ExecStop=/usr/bin/docker rm --force avahi-daemon
+ExecStart=/bin/sh -c "cd /run/avahi-daemon && /usr/bin/atomic run --name=avahi-daemon avahi-daemon"
+ExecStop=-/usr/bin/docker rm --force avahi-daemon
 
 [Install]
 WantedBy=multi-user.target
