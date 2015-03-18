@@ -14,4 +14,4 @@ ExecStart=/usr/bin/atomic run --name=avahi-daemon avahi-daemon
 ExecStop=/usr/bin/docker rm --force avahi-daemon
 
 [Install]
-WantedBy=local.target
+WantedBy=multi-user.target
