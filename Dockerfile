@@ -1,4 +1,3 @@
-#FROM registry.access.redhat.com/rhel7
 FROM stackbrew/centos:7
 MAINTAINER cevich@redhat.com
 RUN yum install -y deltarpm yum-utils &&\
@@ -7,4 +6,7 @@ RUN yum install -y deltarpm yum-utils &&\
     yum clean all
 ADD avahi-daemon.conf /etc/avahi/
 ADD ssh.service /etc/avahi/services/
-LABEL RUN /usr/bin/docker run --detach --name NAME --net=host -v /etc/localtime:/etc/localtime IMAGE /usr/sbin/avahi-daemon --debug
+ADD avahi-daemon.service /etc/systemd/system/
+LABEL RUN /usr/bin/docker run --rm --name NAME --net=host --volume /etc/localtime:/etc/localtime:r IMAGE /usr/sbin/avahi-daemon --debug
+LABEL INSTALL /usr/bin/docker run --privileged --rm --volume /:/host --name NAME IMAGE cp -v /etc/systemd/system/avahi-daemon.service /host/etc/systemd/system/
+LABEL UNINSTALL /usr/bin/docker run --privileged --rm --volume /:/host --name NAME IMAGE rm /host/etc/systemd/system/avahi-daemon.service
